@@ -22,9 +22,9 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggle}
-      className="p-2 rounded-full hover:bg-surface-container-high transition-colors text-outline"
+      className="relative p-2.5 rounded-xl glass hover:glow transition-all duration-300 group"
     >
-      <span className="material-symbols-outlined">
+      <span className="material-symbols-outlined transition-transform duration-500 group-hover:rotate-[30deg]">
         {theme === "light" ? "dark_mode" : "light_mode"}
       </span>
     </button>

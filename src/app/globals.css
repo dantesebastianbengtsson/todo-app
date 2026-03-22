@@ -3,39 +3,48 @@
 @tailwind utilities;
 
 :root {
-  --background: #faf8ff;
+  --background: #f0edff;
   --on-surface: #191b24;
+  --gradient-1: #6366f1;
+  --gradient-2: #8b5cf6;
+  --gradient-3: #ec4899;
+  --gradient-4: #06b6d4;
 }
 
 .dark {
-  --background: #121218;
+  --background: #08080f;
   --on-surface: #e1e1ee;
+  --gradient-1: #818cf8;
+  --gradient-2: #a78bfa;
+  --gradient-3: #f472b6;
+  --gradient-4: #22d3ee;
 }
 
 body {
   font-family: "Manrope", sans-serif;
   background: var(--background);
   color: var(--on-surface);
+  overflow-x: hidden;
 }
 
 .dark body {
-  background: #121218;
+  background: #08080f;
 }
 
 .dark .bg-surface {
-  background-color: #121218;
+  background-color: rgba(8, 8, 15, 0.8);
 }
 
 .dark .bg-surface-container-low {
-  background-color: #1e1e2a;
+  background-color: rgba(20, 20, 35, 0.6);
 }
 
 .dark .bg-surface-container-lowest {
-  background-color: #181822;
+  background-color: rgba(15, 15, 28, 0.5);
 }
 
 .dark .bg-surface-container-high {
-  background-color: #2a2a38;
+  background-color: rgba(30, 30, 50, 0.6);
 }
 
 .dark .text-on-surface {
@@ -52,4 +61,156 @@ body {
 
 .pb-safe {
   padding-bottom: env(safe-area-inset-bottom, 0.75rem);
+}
+
+/* Animated mesh gradient background */
+.mesh-gradient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.mesh-gradient::before,
+.mesh-gradient::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+}
+
+.dark .mesh-gradient::before,
+.dark .mesh-gradient::after {
+  opacity: 0.15;
+}
+
+.mesh-gradient::before {
+  width: 600px;
+  height: 600px;
+  background: linear-gradient(135deg, var(--gradient-1), var(--gradient-3));
+  top: -200px;
+  right: -100px;
+  animation: float 8s ease-in-out infinite;
+}
+
+.mesh-gradient::after {
+  width: 500px;
+  height: 500px;
+  background: linear-gradient(135deg, var(--gradient-4), var(--gradient-2));
+  bottom: -150px;
+  left: -100px;
+  animation: float 8s ease-in-out 4s infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-30px) rotate(5deg); }
+}
+
+/* Glassmorphism card */
+.glass {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.dark .glass {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(30px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.dark .glass-strong {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dark .gradient-text {
+  background: linear-gradient(135deg, #818cf8, #a78bfa, #f472b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glow effect */
+.glow {
+  box-shadow:
+    0 0 20px rgba(99, 102, 241, 0.15),
+    0 0 60px rgba(139, 92, 246, 0.1),
+    0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+.dark .glow {
+  box-shadow:
+    0 0 20px rgba(99, 102, 241, 0.2),
+    0 0 60px rgba(139, 92, 246, 0.15),
+    0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.glow-intense {
+  box-shadow:
+    0 0 30px rgba(99, 102, 241, 0.3),
+    0 0 80px rgba(139, 92, 246, 0.2),
+    0 0 120px rgba(236, 72, 153, 0.1),
+    0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.dark .glow-intense {
+  box-shadow:
+    0 0 30px rgba(99, 102, 241, 0.35),
+    0 0 80px rgba(139, 92, 246, 0.25),
+    0 0 120px rgba(236, 72, 153, 0.15),
+    0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* Gradient border via pseudo-element */
+.gradient-border {
+  position: relative;
+}
+
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899, #06b6d4);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.gradient-border:hover::before {
+  opacity: 1;
+}
+
+/* Shimmer button */
+.shimmer-btn {
+  background-size: 200% 100%;
+  animation: shimmer 2.5s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }

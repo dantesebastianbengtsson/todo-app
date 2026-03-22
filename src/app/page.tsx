@@ -23,23 +23,27 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header */}
-      <header className="bg-surface fixed top-0 w-full z-50">
+      <header className="fixed top-0 w-full z-50 glass-strong">
         <div className="flex justify-between items-center w-full px-6 py-4 max-w-3xl mx-auto">
-          <h1 className="text-2xl font-bold text-on-surface font-manrope tracking-tight">
-            Todo App
-          </h1>
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/25 animate-pulse-glow">
+              <span className="material-symbols-outlined text-white text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>task_alt</span>
+            </div>
+            <h1 className="text-2xl font-extrabold font-manrope tracking-tight gradient-text">
+              Todo App
+            </h1>
+          </div>
           <ThemeToggle />
         </div>
-        <div className="bg-surface-container-high h-[1px] w-full" />
       </header>
 
       {/* Main */}
-      <main className="flex-grow pt-24 pb-32 px-6 max-w-3xl mx-auto w-full">
-        <section className="mt-16 mb-10">
-          <h2 className="text-[3.5rem] font-extrabold leading-none tracking-tighter text-on-surface mb-2 font-manrope">
+      <main className="flex-grow pt-28 pb-36 px-6 max-w-3xl mx-auto w-full">
+        <section className="mt-12 mb-10 animate-fade-in">
+          <h2 className="text-[4rem] font-extrabold leading-none tracking-tighter mb-3 font-manrope gradient-text">
             Today
           </h2>
-          <p className="text-on-surface-variant font-medium">
+          <p className="text-on-surface-variant font-medium text-lg">
             Capture your intentions for the day.
           </p>
         </section>
@@ -56,13 +60,13 @@ export default function Home() {
         )}
 
         {hydrated && (
-          <section className="mt-12 flex items-center justify-between text-on-surface-variant border-t border-surface-container-high pt-6 pb-20">
-            <span className="text-sm font-semibold tracking-wide uppercase font-manrope">
+          <section className="mt-12 flex items-center justify-between text-on-surface-variant pt-6 pb-20">
+            <span className="text-sm font-bold tracking-wide uppercase font-manrope px-4 py-2 rounded-full glass">
               {remainingCount} {remainingCount === 1 ? "item" : "items"} left
             </span>
             <button
               onClick={clearCompleted}
-              className="text-sm font-semibold tracking-wide uppercase font-manrope hover:text-primary transition-colors"
+              className="text-sm font-bold tracking-wide uppercase font-manrope px-4 py-2 rounded-full glass hover:glow-intense transition-all duration-300 hover:text-purple-500 dark:hover:text-purple-400"
             >
               Clear Completed
             </button>

@@ -23,8 +23,11 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="bg-surface text-on-surface min-h-screen antialiased">
-        {children}
+      <body className="text-on-surface min-h-screen antialiased">
+        <div className="mesh-gradient" aria-hidden="true" />
+        <div className="relative z-10">
+          {children}
+        </div>
       </body>
     </html>
   );

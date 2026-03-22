@@ -15,19 +15,19 @@ const filters: { type: FilterType; label: string; icon: string }[] = [
 
 export default function FilterBar({ filter, onFilterChange }: FilterBarProps) {
   return (
-    <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-t border-surface-container-high shadow-[0_-4px_24px_rgba(0,0,0,0.04)]">
+    <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-3 py-2 glass-strong rounded-2xl glow">
       {filters.map(({ type, label, icon }) => (
         <button
           key={type}
           onClick={() => onFilterChange(type)}
-          className={`flex flex-col items-center justify-center rounded-xl px-6 py-2 transition-all ${
+          className={`flex items-center gap-2 rounded-xl px-5 py-2.5 transition-all duration-300 font-bold text-sm ${
             filter === type
-              ? "bg-primary/10 text-primary"
-              : "text-outline hover:text-on-surface"
+              ? "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/30"
+              : "text-on-surface-variant hover:text-on-surface hover:bg-white/20 dark:hover:bg-white/5"
           }`}
         >
-          <span className="material-symbols-outlined mb-1">{icon}</span>
-          <span className="font-manrope text-[10px] uppercase tracking-wider font-bold">
+          <span className="material-symbols-outlined text-[18px]">{icon}</span>
+          <span className="font-manrope text-xs uppercase tracking-wider font-bold">
             {label}
           </span>
         </button>
