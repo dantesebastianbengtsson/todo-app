@@ -2,12 +2,13 @@
 
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { Todo, FilterType } from "@/types/todo";
+import { Todo, FilterType, CategoryId } from "@/types/todo";
 import { loadTodos, saveTodos } from "@/lib/storage";
 
 export function useTodos() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [filter, setFilter] = useState<FilterType>("all");
+  const [categoryFilter, setCategoryFilter] = useState<CategoryId | null>(null);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
@@ -21,12 +22,12 @@ export function useTodos() {
     }
   }, [todos, hydrated]);
 
-  const addTodo = useCallback((text: string) => {
+  const addTodo = useCallback((text: string, category: CategoryId | null = null) => {
     const trimmed = text.trim();
     if (!trimmed) return;
     setTodos((prev) => [
       ...prev,
-      { id: uuidv4(), text: trimmed, completed: false, createdAt: Date.now() },
+      { id: uuidv4(), text: trimmed, completed: false, createdAt: Date.now(), category },
     ]);
   }, []);
 
@@ -53,31 +54,49 @@ export function useTodos() {
   }, []);
 
   const filteredTodos = useMemo(() => {
+    let result = todos;
     switch (filter) {
       case "active":
-        return todos.filter((t) => !t.completed);
+        result = result.filter((t) => !t.completed);
+        break;
       case "completed":
-        return todos.filter((t) => t.completed);
-      default:
-        return todos;
+        result = result.filter((t) => t.completed);
+        break;
     }
-  }, [todos, filter]);
+    if (categoryFilter) {
+      result = result.filter((t) => t.category === categoryFilter);
+    }
+    return result;
+  }, [todos, filter, categoryFilter]);
 
   const remainingCount = useMemo(
     () => todos.filter((t) => !t.completed).length,
     [todos]
   );
 
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    for (const t of todos) {
+      if (t.category) {
+        counts[t.category] = (counts[t.category] || 0) + 1;
+      }
+    }
+    return counts;
+  }, [todos]);
+
   return {
     todos: filteredTodos,
     filter,
     setFilter,
+    categoryFilter,
+    setCategoryFilter,
     addTodo,
     toggleTodo,
     deleteTodo,
     editTodo,
     clearCompleted,
     remainingCount,
+    categoryCounts,
     hydrated,
   };
 }

@@ -5,18 +5,22 @@ import ThemeToggle from "@/components/ThemeToggle";
 import AddTodo from "@/components/AddTodo";
 import TodoList from "@/components/TodoList";
 import FilterBar from "@/components/FilterBar";
+import CategoryFilter from "@/components/CategoryFilter";
 
 export default function Home() {
   const {
     todos,
     filter,
     setFilter,
+    categoryFilter,
+    setCategoryFilter,
     addTodo,
     toggleTodo,
     deleteTodo,
     editTodo,
     clearCompleted,
     remainingCount,
+    categoryCounts,
     hydrated,
   } = useTodos();
 
@@ -49,6 +53,14 @@ export default function Home() {
         </section>
 
         <AddTodo onAdd={addTodo} />
+
+        {hydrated && (
+          <CategoryFilter
+            selected={categoryFilter}
+            onSelect={setCategoryFilter}
+            counts={categoryCounts}
+          />
+        )}
 
         {hydrated && (
           <TodoList

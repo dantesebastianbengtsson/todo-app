@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, KeyboardEvent } from "react";
 import { Todo } from "@/types/todo";
+import CategoryBadge from "./CategoryBadge";
 
 interface TodoItemProps {
   todo: Todo;
@@ -66,26 +67,31 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit, index }: To
         </button>
 
         {/* Text / Edit */}
-        {editing ? (
-          <input
-            ref={inputRef}
-            value={editText}
-            onChange={(e) => setEditText(e.target.value)}
-            onBlur={handleSave}
-            onKeyDown={handleKeyDown}
-            className="flex-1 bg-transparent border-b-2 border-purple-500 outline-none text-lg font-semibold text-on-surface py-0"
-          />
-        ) : (
-          <span
-            className={`text-lg font-semibold truncate transition-all duration-300 ${
-              todo.completed
-                ? "text-on-surface-variant line-through opacity-40"
-                : "text-on-surface"
-            }`}
-          >
-            {todo.text}
-          </span>
-        )}
+        <div className="flex-1 min-w-0">
+          {editing ? (
+            <input
+              ref={inputRef}
+              value={editText}
+              onChange={(e) => setEditText(e.target.value)}
+              onBlur={handleSave}
+              onKeyDown={handleKeyDown}
+              className="w-full bg-transparent border-b-2 border-purple-500 outline-none text-lg font-semibold text-on-surface py-0"
+            />
+          ) : (
+            <div className="flex items-center gap-2 min-w-0">
+              <span
+                className={`text-lg font-semibold truncate transition-all duration-300 ${
+                  todo.completed
+                    ? "text-on-surface-variant line-through opacity-40"
+                    : "text-on-surface"
+                }`}
+              >
+                {todo.text}
+              </span>
+              <CategoryBadge categoryId={todo.category} compact />
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Action buttons */}
